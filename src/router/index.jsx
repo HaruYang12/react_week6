@@ -6,6 +6,9 @@ import ProductDetailPage from "../pages/ProductDetailPage";
 import CartPage from "../pages/CartPage";
 import NotFound from "../pages/NotFound";
 import LoginPage from "../pages/LoginPage";
+import CheckoutFormPage from "../pages/CheckoutFormPage";
+import CheckoutPaymentPage from "../pages/CheckoutPaymentPage";
+import CheckoutSuccessPage from "../pages/CheckoutSuccessPage";
 
 
 const router = createHashRouter([
@@ -28,6 +31,18 @@ const router = createHashRouter([
             {
                 path: 'cart',
                 element: < CartPage />
+            },
+            {
+                path: 'checkout-form',
+                element: < CheckoutFormPage />
+            },
+            {
+                path: 'checkout-payment',
+                element: < CheckoutPaymentPage />
+            },
+            {
+                path: 'checkout-success',
+                element: <CheckoutSuccessPage />
             }
         ]
     },
