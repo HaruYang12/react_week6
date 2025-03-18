@@ -1,8 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import ReactLoading from 'react-loading';
 import { Link } from "react-router-dom";
+
+
+import Swiper from "swiper";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -11,6 +16,8 @@ export default function CartPage (){
     const [cart, setCart] = useState({});
 
     const [isScreenLoading, setIsScreenLoading] = useState(false);
+
+    const swiperRef = useRef(null);
 
     const getCart = async() => {
         try {
@@ -24,6 +31,25 @@ export default function CartPage (){
 
     useEffect(() => {
         getCart();
+
+        new Swiper(swiperRef.current, {
+          modules: [Autoplay],
+          loop: true,
+          autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+          },
+          slidesPerView: 2,
+          spaceBetween: 10,
+          breakpoints: {
+            767: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+          },
+        });
+        
+
     }, []);
 
      // 新增購物車
@@ -277,7 +303,7 @@ export default function CartPage (){
               </div>
               <div className="my-5">
                 <h3 className="fw-bold">Lorem ipsum dolor sit amet</h3>
-                <div className="swiper-container mt-4 mb-5">
+                <div ref={swiperRef} className="swiper mt-4 mb-5">
                   <div className="swiper-wrapper">
                     <div className="swiper-slide">
                       <div className="card border-0 mb-4 position-relative position-relative">
