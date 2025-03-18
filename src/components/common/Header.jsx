@@ -42,9 +42,9 @@ export default function Header() {
                 <NavLink className="nav-item nav-link me-4" to="/detail">
                   Detail
                 </NavLink>
-                <a className="nav-item nav-link" href="./cart.html">
+                <NavLink className="nav-item nav-link" to="/cart">
                   <i className="fas fa-shopping-cart"></i>
-                </a>
+                </NavLink>
               </div>
             </div>
           </nav>
