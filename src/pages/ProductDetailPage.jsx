@@ -2,6 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react"
 import { useParams, Link } from "react-router-dom";
 import ReactLoading from 'react-loading';
+import { useDispatch } from "react-redux";
+import { updateCartData } from "../redux/cartSlice";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -13,6 +15,24 @@ export default function ProductDetailPage (){
     const [isScreenLoading, setIsScreenLoading] = useState(false);
 
     const { id: product_id } = useParams();
+
+    const dispatch = useDispatch()
+
+    const getCart = async() => {
+      try {
+      const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`);
+
+      dispatch(updateCartData(res.data.data))
+
+      } catch (error) {
+      alert('取得購物車列表失敗')
+      }
+  }
+
+  useEffect(() => {
+      getCart();
+
+  }, []);
 
     useEffect(() => {
         const getProduct = async () => {
@@ -38,6 +58,7 @@ export default function ProductDetailPage (){
               qty: Number(qty) //qty需轉型成數字型別
             }
           })
+          getCart();
         } catch (error) {
           alert('加入購物車失敗')
         } finally {
@@ -110,7 +131,7 @@ export default function ProductDetailPage (){
                   </nav>
                   <h2 className="fw-bold h1 mb-1">{product.title}</h2>
                   <p className="mb-0 text-muted text-end">
-                    <del>NT$ {product.origin_price}</del>
+                    <del>NT$ {product.origin_price?.toLocaleString()}</del>
                   </p>
                   <p className="h4 fw-bold text-end">NT$ {product.price}</p>
                   <div className="row align-items-center">
@@ -134,6 +155,7 @@ export default function ProductDetailPage (){
                           aria-label="Example text with button addon"
                           aria-describedby="button-addon1"
                           value={qtySelect}
+                          readOnly
                         />
                         <div className="input-group-append">
                           <button

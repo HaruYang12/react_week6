@@ -23,7 +23,7 @@ export default function CartPage (){
         try {
         const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`);
 
-        setCart(res.data.data);
+        setCart(res.data.data || { carts: [], total: 0, final_total: 0 });
         } catch (error) {
         alert('取得購物車列表失敗')
         }
@@ -173,7 +173,7 @@ export default function CartPage (){
                       </tr>
                     </thead>
                     <tbody>
-                      {cart.carts?.map((cartItem) => (
+                      {cart?.carts?.length > 0 ? (cart.carts?.map((cartItem) => (
                         <tr key={cartItem.id}  className="border-bottom border-top">
                           <th
                             scope="row"
@@ -215,6 +215,7 @@ export default function CartPage (){
                                 aria-label="Example text with button addon"
                                 aria-describedby="button-addon1"
                                 value={cartItem.qty}
+                                readOnly
                               />
                               <div className="input-group-append">
                                 <button
@@ -242,7 +243,11 @@ export default function CartPage (){
                             </button>
                           </td>
                         </tr>
-                      ))}
+                      ))) : (
+                        <tr>
+                          <td colSpan="4" className="text-center py-4">購物車是空的</td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                   <div className="input-group w-50 mb-3">
