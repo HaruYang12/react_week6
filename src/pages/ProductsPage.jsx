@@ -8,7 +8,7 @@ const API_PATH = import.meta.env.VITE_API_PATH;
 
 export default function ProductsPage (){
  
-    // const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
 
 
@@ -17,20 +17,24 @@ export default function ProductsPage (){
 
     const [selectedCategory, setSelectedCategory] = useState('全部');
 
-    useEffect(() => {
-        // const getProducts = async () => {
-        //   setIsScreenLoading(true);
-        //   try {
-        //     const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products`);
-        //     setProducts(res.data.products);
-        //   } catch (error) {
-        //     alert("取得產品失敗");
-        //   }finally {
-        //     setIsScreenLoading(false);
-        //   }
-        // };
-        // getProducts();
+    const [wishList, setWishList] = useState(() => {
+      const initWishList = localStorage.getItem('wishList') ? JSON.parse(localStorage.getItem('wishList')) : {};
 
+      return initWishList
+    });
+
+    const toggleWishListItem = (product_id) => {
+      const newWishList ={
+        ...wishList,
+        [product_id]: !wishList[product_id]
+      }
+
+      localStorage.setItem('wishList',JSON.stringify(newWishList));
+
+      setWishList(newWishList);
+    }
+
+    useEffect(() => {
         const getAllProducts = async () => {
           setIsScreenLoading(true);
           try {
@@ -43,7 +47,23 @@ export default function ProductsPage (){
           }
         };
         getAllProducts();
+
       }, []);
+
+      useEffect(() => {
+        const getProducts = async () => {
+          setIsScreenLoading(true);
+          try {
+            const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products?category=${selectedCategory === '全部' ? '' : selectedCategory}`);
+            setProducts(res.data.products);
+          } catch (error) {
+            alert("取得產品失敗");
+          }finally {
+            setIsScreenLoading(false);
+          }
+        };
+        getProducts();
+      }, [selectedCategory])
 
       const categories = ['全部', ...new Set(allProducts.map((product) => product.category))];
       
@@ -133,7 +153,7 @@ export default function ProductsPage (){
               </div>
               <div className="col-md-8">
                 <div className="row">
-                  {filteredProducts.map((product) => (
+                  {products.map((product) => (
                     <div key={product.id} className="col-md-6">
                       <div className="card border-0 mb-4 position-relative position-relative">
                         <img
@@ -141,12 +161,12 @@ export default function ProductsPage (){
                           className="card-img-top rounded-0"
                           alt={product.title}
                         />
-                        <a href="#" className="text-dark">
+                        <button onClick={() => toggleWishListItem(product.id)} type="button" className="btn border-none text-dark">
                           <i
-                            className="far fa-heart position-absolute"
+                            className={`${wishList[product.id] ? 'fas' : 'far'} far fa-heart position-absolute`}
                             style={{ right: "16px", top: "16px" }}
                           ></i>
-                        </a>
+                        </button>
                         <div className="card-body p-0">
                           <h4 className="mb-0 mt-3">
                             <Link to={`/products/${product.id}`}>{product.title}</Link>
