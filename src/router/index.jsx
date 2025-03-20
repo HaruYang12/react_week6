@@ -5,10 +5,13 @@ import ProductsPage from "../pages/ProductsPage";
 import ProductDetailPage from "../pages/ProductDetailPage";
 import CartPage from "../pages/CartPage";
 import NotFound from "../pages/NotFound";
-import LoginPage from "../pages/LoginPage";
 import CheckoutFormPage from "../pages/CheckoutFormPage";
 import CheckoutPaymentPage from "../pages/CheckoutPaymentPage";
 import CheckoutSuccessPage from "../pages/CheckoutSuccessPage";
+import LoginPage from "../pages/LoginPage";
+import AdminLayout from "../layouts/AdminLayout";
+import GoodsPage from "../pages/GoodsPage";
+
 
 
 const router = createHashRouter([
@@ -48,7 +51,14 @@ const router = createHashRouter([
     },
     {
         path: '/login',
-        element: < LoginPage />
+        element: < LoginPage />,
+    },
+    {
+        path: '/admin',
+        element: <AdminLayout />,
+        children: [
+            { path: 'goods', element: <GoodsPage /> }, // ✅ `/admin` 預設顯示 Dashboard
+        ]
     },
     {
         path: '*',
