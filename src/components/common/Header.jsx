@@ -41,9 +41,10 @@ export default function Header() {
           className="container d-flex flex-column"
         >
           <nav className="navbar navbar-expand-lg navbar-light">
-            <a className="navbar-brand" href="./index.html">
-              Navbar
-            </a>
+            <img height={'150px'} src="https://i.imgur.com/GpaBbev.png" alt="Silent Brew Daily" />
+            {/* <p className="fw-bolder">
+             Silent Brew Daily
+            </p> */}
             <button
               className="navbar-toggler"
               type="button"
@@ -61,7 +62,7 @@ export default function Header() {
             >
               <div className="navbar-nav">
                 {routes.map((route) => (
-                  <NavLink key={route.path} className="nav-item nav-link me-4" to={route.path}>
+                  <NavLink key={route.path} className="nav-item nav-link me-4 fw-bold" to={route.path}>
                   {route.name === '購物車' ? (
                     <div className="position-relative">
                     <i className="fas fa-shopping-cart"></i>
