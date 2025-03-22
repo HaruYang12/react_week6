@@ -1,7 +1,7 @@
 export default function HomePage() {
 
     return (
-      <div className="container">
+      <div className="container-fluid py-0">
         <div
           className="position-absolute"
           style={{
@@ -35,14 +35,17 @@ export default function HomePage() {
         </div>
         <div
           style={{
-            margin: "0",
-            padding: "0",
+            margin: 0,
+            padding: 0,
+            left: 0,
+            right: 0,
             width: "100%",
             minHeight: "100vh",
             backgroundImage: "url('https://images.pexels.com/photos/4815952/pexels-photo-4815952.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')",
             backgroundPosition: "center",
             backgroundAttachment: "scroll", 
-            position: "relative"
+            position: "relative",
+            backgroundSize: "cover"
           }}
         >
           <div
@@ -56,7 +59,7 @@ export default function HomePage() {
               pointerEvents: "none", // 🔹 避免影響點擊
             }}
           ></div>
-          <div className="container position-relative">
+          <div className="container-fluid py-5 position-relative">
             <div className="row justify-content-center align-items-center mx-0" style={{ minHeight: "100vh" }}>
               <div className="col-md-4 d-flex justify-content-center mt-4 mt-md-0">
                 <div className="card border-0 mb-4 shadow" style={{ width: "100%", maxWidth: "350px" }}>

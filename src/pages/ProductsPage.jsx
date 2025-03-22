@@ -104,12 +104,15 @@ export default function ProductsPage (){
                 left: 0,
                 right: 0,
                 backgroundImage:
-                  "url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)",
-                backgroundPosition: "center center",
-                opacity: 0.1,
+                  "url(https://images.pexels.com/photos/2159106/pexels-photo-2159106.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
+                backgroundPosition: "center 60%",
+                opacity: 0.18,
               }}
             ></div>
-            <h2 className="fw-bold">Lorem ipsum.</h2>
+            <div className="text-center fw-bold">
+            <h2 className=" text-center">探索我們的商品</h2>
+            <br /><p>從單品濾掛到完整套裝，精選組合讓你輕鬆上手。依據類別或風味選擇，找到你的專屬風格。</p>
+            </div>
           </div>
           <div className="container mt-md-5 mt-3 mb-7">
             <div className="row">

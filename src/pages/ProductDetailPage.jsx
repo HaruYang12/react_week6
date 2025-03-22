@@ -1,9 +1,13 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useParams, Link } from "react-router-dom";
 import ReactLoading from 'react-loading';
 import { useDispatch } from "react-redux";
 import { updateCartData } from "../redux/cartSlice";
+
+import Swiper from "swiper";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -14,9 +18,12 @@ export default function ProductDetailPage (){
     const [isLoading, setIsLoading] = useState(false);
     const [isScreenLoading, setIsScreenLoading] = useState(false);
 
+    const [recommendProducts, setRecommendProducts] = useState([]);
+
     const { id: product_id } = useParams();
 
     const dispatch = useDispatch()
+    const swiperRef = useRef(null);
 
     const getCart = async() => {
       try {
@@ -32,6 +39,23 @@ export default function ProductDetailPage (){
   useEffect(() => {
       getCart();
 
+      new Swiper(swiperRef.current, {
+        modules: [Autoplay],
+        loop: true,
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false,
+        },
+        slidesPerView: 2,
+        spaceBetween: 10,
+        breakpoints: {
+          767: {
+            slidesPerView: 3,
+            spaceBetween: 30,
+          },
+        },
+      });
+
   }, []);
 
     useEffect(() => {
@@ -46,8 +70,18 @@ export default function ProductDetailPage (){
             setIsScreenLoading(false);
           }
         };
+        const getRcommendProducts = async () => {
+          const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products/all`);
+          const allProducts = Object.values(res.data.products);
+      
+          
+          const filtered = allProducts.filter(p => p.id !== product_id).slice(0, 6);
+          setRecommendProducts(filtered);
+        };
+
         getProduct();
-      }, []);
+        getRcommendProducts();
+      }, [product_id]);
       
       const addCartItem = async (product_id, qty) => {
         setIsLoading(true);
@@ -184,22 +218,43 @@ export default function ProductDetailPage (){
               <div className="row my-5">
                 <div className="col-md-4">
                   <p>
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                    nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-                    erat, sed diam voluptua. At vero eos et accusam et
+                    {product.description}
                   </p>
                 </div>
                 <div className="col-md-3">
                   <p className="text-muted">
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                    nonumy eirmod tempor
+                  {product.content}
                   </p>
                 </div>
               </div>
-              <h3 className="fw-bold">Lorem ipsum dolor sit amet</h3>
-              <div className="swiper-container mt-4 mb-5">
+              <h3 className="fw-bold">商品推薦</h3>
+              <div ref={swiperRef} className="swiper-container mt-4 mb-5">
                 <div className="swiper-wrapper">
-                  <div className="swiper-slide">
+                  {recommendProducts.map((product) => (
+                    <div className="swiper-slide">
+                      <div className="card border-0 mb-4 position-relative position-relative">
+                        <img
+                          src={product.imageUrl}
+                          className="card-img-top rounded-0"
+                          alt={product.title}
+                        />
+                        <a href="#" className="text-dark"></a>
+                        <div className="card-body p-0">
+                          <h4 className="mb-0 mt-3">
+                            <a href="#">{product.title}</a>
+                          </h4>
+                          <p className="card-text mb-0">
+                          NT$ {product.price}
+                            <span className="text-muted ">
+                              <del>NT$ {product.origin_price}</del>
+                            </span>
+                          </p>
+                          <p className="text-muted mt-3"></p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {/* <div className="swiper-slide">
                     <div className="card border-0 mb-4 position-relative position-relative">
                       <img
                         src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
@@ -286,29 +341,7 @@ export default function ProductDetailPage (){
                         <p className="text-muted mt-3"></p>
                       </div>
                     </div>
-                  </div>
-                  <div className="swiper-slide">
-                    <div className="card border-0 mb-4 position-relative position-relative">
-                      <img
-                        src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
-                        className="card-img-top rounded-0"
-                        alt="..."
-                      />
-                      <a href="#" className="text-dark"></a>
-                      <div className="card-body p-0">
-                        <h4 className="mb-0 mt-3">
-                          <a href="#">Lorem ipsum</a>
-                        </h4>
-                        <p className="card-text mb-0">
-                          NT$1,080
-                          <span className="text-muted ">
-                            <del>NT$1,200</del>
-                          </span>
-                        </p>
-                        <p className="text-muted mt-3"></p>
-                      </div>
-                    </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
