@@ -1,10 +1,10 @@
 export default function Footer() {
     return (
       <>
-        <div className="bg-light py-4">
+        <div className="py-4 text-dark" style={{backgroundColor:"#f4eee9"}}>
           <div className="container">
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start">
-              <p className="mb-0 fw-bold">Lorem ipsum dolor sit amet.</p>
+              <p className="mb-0 fw-bold">訂閱我們，獲取最新消息！</p>
               <div className="input-group w-md-50 mt-md-0 mt-3">
                 <input
                   type="text"
@@ -17,19 +17,16 @@ export default function Footer() {
                     type="button"
                     id="search"
                   >
-                    Lorem ipsum
+                    訂閱
                   </button>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="bg-dark py-5">
+        <div className="py-5 bg-coffee">
           <div className="container">
-            <div className="d-flex align-items-center justify-content-between text-white mb-md-7 mb-4">
-              <a className="text-white h4" href="./index.html">
-                LOGO
-              </a>
+            {/* <div className="d-flex align-items-center justify-content-between text-white mb-md-7 mb-4">
               <ul className="d-flex list-unstyled mb-0 h4">
                 <li>
                   <a href="#" className="text-white mx-3">
@@ -47,13 +44,14 @@ export default function Footer() {
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
             <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-end align-items-start text-white">
               <div className="mb-md-0 mb-1">
-                <p className="mb-0">02-3456-7890</p>
-                <p className="mb-0">service@mail.com</p>
+                <h5>聯絡我們</h5>
+                <p className="mb-0">07-123-4567</p>
+                <p className="mb-0">silent_brew_daily@gmail.com</p>
               </div>
-              <p className="mb-0">© 2020 LOGO All Rights Reserved.</p>
+              <p className="mb-0">Copyright© SlientBrewDaily by HuiChun</p>
             </div>
           </div>
         </div>

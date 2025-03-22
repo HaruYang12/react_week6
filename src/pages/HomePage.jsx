@@ -1,6 +1,7 @@
 export default function HomePage() {
+
     return (
-      <div className="container-fluid p-0 ">
+      <div className="container">
         <div
           className="position-absolute"
           style={{
@@ -17,7 +18,7 @@ export default function HomePage() {
         ></div>
         <div
           className="container d-flex flex-column justify-content-center align-items-center"
-          style={{ height: "calc(100vh - 182px)"}}
+          style={{ height: "calc(100vh - 120px)"}}
         >
         <div className="container">
           <div className="row justify-content-center my-auto">
@@ -57,7 +58,7 @@ export default function HomePage() {
           ></div>
           <div className="container position-relative">
             <div className="row justify-content-center align-items-center mx-0" style={{ minHeight: "100vh" }}>
-              <div className="col-md-4 d-flex justify-content-center">
+              <div className="col-md-4 d-flex justify-content-center mt-4 mt-md-0">
                 <div className="card border-0 mb-4 shadow" style={{ width: "100%", maxWidth: "350px" }}>
                   <img
                     src="https://images.pexels.com/photos/3737655/pexels-photo-3737655.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -102,7 +103,7 @@ export default function HomePage() {
                     <h4>咖啡生活</h4>
                     <div className="d-flex justify-content-between">
                       <p className="card-text text-muted mb-0">
-                      享受咖啡，品味生活中的靜謐時刻。
+                      享受咖啡的美好，品味生活中的靜謐時刻。
                       </p>
                     </div>
                   </div>
@@ -111,119 +112,64 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-        <div className="bg-light mt-7">
+        <div className="bg-coffee mt-5">
           <div className="container">
-            <div
-              id="carouselExampleControls"
-              className="carousel slide"
-              data-ride="carousel"
-            >
-              <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <div className="row justify-content-center py-7">
-                    <div className="col-md-6 text-center">
-                      <h3>Lorem ipsum.</h3>
-                      <p className="my-5">
-                        “Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                        sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                        magna aliquyam erat.”
-                      </p>
-                      <p>
-                        <small>—Lorem ipsum dolor sit amet.—</small>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="carousel-item">
-                  <div className="row justify-content-center py-7">
-                    <div className="col-md-6 text-center">
-                      <h3>Lorem ipsum.</h3>
-                      <p className="my-5">
-                        “Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                        sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                        magna aliquyam erat.”
-                      </p>
-                      <p>
-                        <small>—Lorem ipsum dolor sit amet.—</small>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="carousel-item">
-                  <div className="row justify-content-center py-7">
-                    <div className="col-md-6 text-center">
-                      <h3>Lorem ipsum.</h3>
-                      <p className="my-5">
-                        “Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-                        sed diam nonumy eirmod tempor invidunt ut labore et dolore
-                        magna aliquyam erat.”
-                      </p>
-                      <p>
-                        <small>—Lorem ipsum dolor sit amet.—</small>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+            <div className="row justify-content-center py-5">
+              <div className="col-sm-12 text-center text-light">
+                <h3>一杯好咖啡，來自每個細節的堅持。</h3>
+                <p className="my-4 fw-bold">
+                從挑豆、烘焙到沖煮，每一滴咖啡都值得細細品味。
+                </p>
               </div>
-              <a
-                className="carousel-control-prev"
-                href="#carouselExampleControls"
-                role="button"
-                data-slide="prev"
-              >
-                <span
-                  className="carousel-control-prev-icon"
-                  aria-hidden="true"
-                ></span>
-                <span className="sr-only">Previous</span>
-              </a>
-              <a
-                className="carousel-control-next"
-                href="#carouselExampleControls"
-                role="button"
-                data-slide="next"
-              >
-                <span
-                  className="carousel-control-next-icon"
-                  aria-hidden="true"
-                ></span>
-                <span className="sr-only">Next</span>
-              </a>
             </div>
           </div>
         </div>
         <div className="container my-7">
-          <div className="row mx-0">
+          <div className="row mx-0 p-4 bg-white shadow rounded homeCardColor">
             <div className="col-md-6">
               <img
-                src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
+                src="https://images.pexels.com/photos/1459339/pexels-photo-1459339.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="coffee beans"
                 className="img-fluid"
               />
             </div>
             <div className="col-md-4 m-auto text-center">
-              <h4 className="mt-4">嚴選咖啡豆</h4>
+              <h4 className="mt-4">嚴選豆源</h4>
               <p className="text-muted">
-                精選產地咖啡豆，帶出最純粹的風味。
+                與產地小農合作，保證新鮮直送。
               </p>
             </div>
           </div>
-          <div className="container">
-            <div className="row flex-row-reverse justify-content-between mt-4">
+          <div className="container my-7 ">
+            <div className="row flex-row-reverse justify-content-between mt-4 bg-white shadow rounded homeCardColor">
               <div className="col-md-6">
                 <img
-                  src="https://images.unsplash.com/photo-1490312278390-ab64016e0aa9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
-                  alt=""
+                  src="https://images.pexels.com/photos/2711959/pexels-photo-2711959.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  alt="bake"
                   className="img-fluid"
                 />
               </div>
               <div className="col-md-4 m-auto text-center">
-                <h4 className="mt-4">Lorem ipsum</h4>
+                <h4 className="mt-4">精準烘焙</h4>
                 <p className="text-muted">
-                  Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-                  nonumy eirmod tempor 
+                根據風味曲線調整每一批烘焙溫度 。
                 </p>
               </div>
+            </div>
+          </div>
+          <div className="row mx-0 p-4 bg-white shadow rounded homeCardColor">
+            <div className="col-md-6">
+              <img
+                src="https://images.pexels.com/photos/9409746/pexels-photo-9409746.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                alt="coffee beans"
+                className="img-fluid"
+              />
+            </div>
+            <div className="col-md-4 m-auto text-center">
+              <h4 className="mt-4">專業推薦</h4>
+              <p className="text-muted">
+              依照你的口味推薦最合適的咖啡豆
+              </p>
             </div>
           </div>
         </div>

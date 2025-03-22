@@ -14,6 +14,7 @@ import GoodsPage from "../pages/GoodsPage";
 
 
 
+
 const router = createHashRouter([
     {
         path: '/',
