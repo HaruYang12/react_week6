@@ -53,11 +53,11 @@ export default function CheckoutFormPage() {
             <h3 className="fw-bold mb-4 pt-3">填寫結帳資訊</h3>
           </div>
         </div>
-        <div className="row justify-content-center gx-0">
-          <div className="col-12 col-md-5">
+        <div className="row flex-row-reverse justify-content-center gx-0 gx-md-5">
+          <div className="col-12 col-md-4">
             <div className="border p-4 mb-4">
               {cart.carts?.map((cartItem) => (
-                <div className="d-flex mt-2 img-fluid">
+                <div className="d-flex mt-2 img-fluid" key={cartItem.product.id}>
                 <img
                   src={cartItem.product.imageUrl}
                   alt={cartItem.product.title}
@@ -101,7 +101,7 @@ export default function CheckoutFormPage() {
               </div>
             </div>
           </div>
-          <div className="col-12 col-md-5">
+          <div className="col-12 col-md-6">
             <form>
               <p>聯絡方式</p>
               <div className="mb-0">

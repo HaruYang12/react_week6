@@ -64,10 +64,10 @@ export default function CheckoutPaymentPage() {
           </div>
         </div>
         <div className="row flex-row-reverse justify-content-center pb-5 gx-0">
-          <div className="col-md-4">
+          <div className="col-md-4 gx-md-5">
             <div className="border p-4 mb-4">
               {cart.carts?.map((cartItem) => (
-                <div className="d-flex mt-2">
+                <div className="d-flex mt-2" key={cartItem.product.id}>
                 <img
                   src={cartItem.product.imageUrl}
                   alt={cartItem.product.title}
@@ -115,7 +115,7 @@ export default function CheckoutPaymentPage() {
               </div>
             </div>
           </div>
-          <div className="col-md-6">
+          <div className="col-md-6 gx-md-5">
             <div className="accordion" id="accordionExample">
             {paymentOptions.map((option) => (
               <div key={option.value} className="card rounded-0">

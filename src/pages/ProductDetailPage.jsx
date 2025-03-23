@@ -232,7 +232,7 @@ export default function ProductDetailPage (){
               <div ref={swiperRef} className="swiper-container mt-4 mb-5">
                 <div className="swiper-wrapper">
                   {recommendProducts.map((product) => (
-                    <div className="swiper-slide">
+                    <div className="swiper-slide" key={product.id}>
                       <div className="card border-0 mb-4 position-relative position-relative">
                         <img
                           src={product.imageUrl}
