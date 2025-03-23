@@ -175,9 +175,9 @@ export default function ProductsPage (){
                             <Link to={`/products/${product.id}`}>{product.title}</Link>
                           </h4>
                           <p className="card-text mb-0">
-                            NT$ {product.origin_price}
+                            NT$ {product.price}
                             <span className="text-muted">
-                              <del>NT$ {product.price}</del>
+                              <del>NT$ {product.origin_price}</del>
                             </span>
                           </p>
                           <p className="text-muted mt-3"></p>
