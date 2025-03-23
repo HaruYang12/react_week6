@@ -176,7 +176,7 @@ export default function ProductsPage (){
                           </h4>
                           <p className="card-text mb-0">
                             NT$ {product.origin_price}
-                            <span className="text-muted ">
+                            <span className="text-muted">
                               <del>NT$ {product.price}</del>
                             </span>
                           </p>

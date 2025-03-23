@@ -116,6 +116,7 @@ export default function ProductDetailPage (){
                           src={product.imageUrl}
                           className="d-block w-100"
                           alt={product.title}
+                          style={{ width: "100%", maxWidth: "500px" }}
                         />
                       </div>
                     </div>

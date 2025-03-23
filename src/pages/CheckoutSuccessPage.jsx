@@ -1,3 +1,6 @@
+import { Link } from "react-router-dom";
+
+
 export default function CheckoutSuccessPage() {
     return (
       <div className="container-fluid">
@@ -7,21 +10,18 @@ export default function CheckoutSuccessPage() {
             style={{ minHeight: "100vh" }}
           >
             <nav className="navbar navbar-expand-lg navbar-light px-0">
-              <a className="navbar-brand" href="./index.html">
-                Navbar
-              </a>
             </nav>
             <div className="row my-auto pb-7">
-              <div className="col-md-4 d-flex flex-column">
+              <div className="col-md-4 d-flex flex-column offset-md-2">
                 <div className="my-auto">
-                  <h2>Checkout Success</h2>
+                  <h2>付款完成，一起喝杯咖啡吧！</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed
-                    diam nonumy eirmod
+                    商品會在確認訂單後儘速出貨，請耐心等候。
+                    <br />如有疑問請洽客服專線
                   </p>
-                  <a href="./index.html" className="btn btn-dark mt-4 px-5">
-                    Back To Home
-                  </a>
+                  <Link to="/" className="btn btn-dark mt-2 px-5">
+                    回到首頁
+                  </Link>
                 </div>
               </div>
             </div>
@@ -33,8 +33,10 @@ export default function CheckoutSuccessPage() {
               minHeight: "100vh",
               right: 0,
               backgroundImage:
-                "url(https://images.unsplash.com/photo-1480399129128-2066acb5009e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)",
-              backgroundPosition: "center center",
+                "url(https://images.pexels.com/photos/2616172/pexels-photo-2616172.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)",
+              backgroundPosition: "center",
+              backgroundSize: "contain", 
+              backgroundRepeat: "no-repeat"
             }}
           ></div>
         </div>
