@@ -146,12 +146,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <section
-  style={{
-    height: "100px", // 可依視覺調整高度
-    background: "linear-gradient(to bottom,rgb(253, 249, 246), #ffffff)",
-  }}
-></section>
+        
 
         <div className="container my-7">
           <div className="row mx-0 p-4 bg-white shadow rounded homeCardColor">
