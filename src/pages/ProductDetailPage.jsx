@@ -1,7 +1,7 @@
 import axios from "axios";
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useCallback } from "react"
 import { useParams, Link } from "react-router-dom";
-import ReactLoading from 'react-loading';
+// import ReactLoading from 'react-loading';
 import { useDispatch } from "react-redux";
 import { updateCartData } from "../redux/cartSlice";
 
@@ -25,18 +25,20 @@ export default function ProductDetailPage (){
     const dispatch = useDispatch()
     const swiperRef = useRef(null);
 
-    const getCart = async() => {
+    const getCart = useCallback(async() => {
       try {
       const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`);
 
       dispatch(updateCartData(res.data.data))
 
-      } catch (error) {
+      } catch {
       alert('取得購物車列表失敗')
       }
-  }
+   },[dispatch]);
+    
 
   useEffect(() => {
+    
       getCart();
 
       new Swiper(swiperRef.current, {
@@ -55,8 +57,7 @@ export default function ProductDetailPage (){
           },
         },
       });
-
-  }, []);
+  }, [getCart]);
 
     useEffect(() => {
         const getProduct = async () => {
@@ -64,7 +65,7 @@ export default function ProductDetailPage (){
           try {
             const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/product/${product_id}`);
             setProduct(res.data.product);
-          } catch (error) {
+          } catch {
             alert("取得產品失敗");
           }finally {
             setIsScreenLoading(false);
@@ -93,7 +94,7 @@ export default function ProductDetailPage (){
             }
           })
           getCart();
-        } catch (error) {
+        } catch {
           alert('加入購物車失敗')
         } finally {
           setIsLoading(false);

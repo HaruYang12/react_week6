@@ -1,11 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { updateCartData } from "../../redux/cartSlice";
-import { useEffect } from "react";
-import axios from "axios";
 
-const BASE_URL = import.meta.env.VITE_BASE_URL;
-const API_PATH = import.meta.env.VITE_API_PATH;
 
 const routes = [
   { path: "/goods", name: "產品管理" },

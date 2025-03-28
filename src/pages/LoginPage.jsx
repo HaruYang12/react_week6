@@ -47,7 +47,7 @@ export default function LoginPage() {
           
           navigate("/admin/goods");
 
-        } catch (error) {
+        } catch {
           alert('登入失敗');
     
         }
@@ -66,13 +66,16 @@ export default function LoginPage() {
 
        useEffect(() =>{
            const token = document.cookie.replace(
-             /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
+             /(?:(?:^|.*;\s*)hexToken\s*=\s*([^;]*).*$)|^.*$/,
              "$1",
            );
-           axios.defaults.headers.common['Authorization'] = token;
-      
-          checkUserLogin();
-      }, [])
+           if (token) {
+            axios.defaults.headers.common['Authorization'] = token;
+            checkUserLogin().then(() => {
+              navigate("/admin/goods");
+            });
+          }
+      }, [navigate])
 
     return (<div className="d-flex flex-column justify-content-center align-items-center vh-100">
         <h1 className="mb-5">請先登入</h1>

@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState} from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 import ReactLoading from 'react-loading';
 import { Link } from "react-router-dom";
 
@@ -19,14 +19,12 @@ export default function CartPage (){
 
     const [recommendProducts, setRecommendProducts] = useState([]);
 
-    const swiperRef = useRef(null);
-
     const getCart = async() => {
         try {
         const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`);
 
         setCart(res.data.data || { carts: [], total: 0, final_total: 0 });
-        } catch (error) {
+        } catch {
         alert('取得購物車列表失敗')
         }
     }
@@ -39,7 +37,7 @@ export default function CartPage (){
         
         const recommended = allProducts.slice(0, 6);
         setRecommendProducts(recommended);
-      } catch (error) {
+      } catch {
         alert('取得推薦商品失敗');
       }
     };
@@ -51,37 +49,37 @@ export default function CartPage (){
     }, []);
 
      // 新增購物車
-    const addCartItem = async (product_id, qty) => {
-        setIsLoading(true);
-        try {
-            await axios.post(`${BASE_URL}/v2/api/${API_PATH}/cart`, {
-            data: {
-            product_id,
-            qty: Number(qty) //qty需轉型成數字型別
-            }
-        })
+    // const addCartItem = async (product_id, qty) => {
+    //     setIsLoading(true);
+    //     try {
+    //         await axios.post(`${BASE_URL}/v2/api/${API_PATH}/cart`, {
+    //         data: {
+    //         product_id,
+    //         qty: Number(qty) //qty需轉型成數字型別
+    //         }
+    //     })
 
-        getCart();
-        } catch (error) {
-        alert('加入購物車失敗')
-        } finally {
-        setIsLoading(false);
-        }
-    }
+    //     getCart();
+    //     } catch (error) {
+    //     alert('加入購物車失敗')
+    //     } finally {
+    //     setIsLoading(false);
+    //     }
+    // }
 
     // 清空購物車(全部)
-    const removeCart = async () => {
-        setIsScreenLoading(true);
-        try {
-        await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/carts`)
+    // const removeCart = async () => {
+    //     setIsScreenLoading(true);
+    //     try {
+    //     await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/carts`)
 
-        getCart();
-        } catch (error) {
-        alert('刪除購物車失敗')
-        } finally {
-        setIsScreenLoading(false);
-        }
-    }
+    //     getCart();
+    //     } catch {
+    //     alert('刪除購物車失敗')
+    //     } finally {
+    //     setIsScreenLoading(false);
+    //     }
+    // }
 
     // 清空購物車(單一產品)
     const removeCartItem = async (cartItem_id) => {
@@ -90,7 +88,7 @@ export default function CartPage (){
         await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/cart/${cartItem_id}`)
 
         getCart();
-        } catch (error) {
+        } catch {
         alert('刪除購物車品項失敗')
         } finally {
         setIsScreenLoading(false);
@@ -109,44 +107,44 @@ export default function CartPage (){
         })
 
         getCart();
-        } catch (error) {
+        } catch {
         alert('更新數量失敗')
         } finally {
         setIsScreenLoading(false);
         }
     }
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset
-      } = useForm()
+    // const {
+    //     register,
+    //     handleSubmit,
+    //     formState: { errors },
+    //     reset
+    //   } = useForm()
     
-    const onSubmit = handleSubmit((data) => {
-        console.log(data);
-        const { message, ...user } = data;
+    // const onSubmit = handleSubmit((data) => {
+    //     console.log(data);
+    //     const { message, ...user } = data;
     
-        const userInfo ={
-          data:{
-            user,
-            message
-          }
-        }
-        checkOut(userInfo);
-    })
+    //     const userInfo ={
+    //       data:{
+    //         user,
+    //         message
+    //       }
+    //     }
+    //     checkOut(userInfo);
+    // })
       
-    const checkOut = async(data) => {
-        setIsScreenLoading(true);
-        try {
-            await axios.post(`${BASE_URL}/v2/api/${API_PATH}/order`, data)
-            reset();
-        } catch (error) {
-            alert('結帳失敗')
-        } finally {
-            setIsScreenLoading(false);
-        }
-    }
+    // const checkOut = async(data) => {
+    //     setIsScreenLoading(true);
+    //     try {
+    //         await axios.post(`${BASE_URL}/v2/api/${API_PATH}/order`, data)
+    //         reset();
+    //     } catch {
+    //         alert('結帳失敗')
+    //     } finally {
+    //         setIsScreenLoading(false);
+    //     }
+    // }
 
       return (
         <div className="container-fluid">

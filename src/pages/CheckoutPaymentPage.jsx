@@ -25,7 +25,7 @@ export default function CheckoutPaymentPage() {
       const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`);
 
       setCart(res.data.data || { carts: [], total: 0, final_total: 0 });
-      } catch (error) {
+      } catch {
       alert('取得購物車列表失敗')
       }
     } 

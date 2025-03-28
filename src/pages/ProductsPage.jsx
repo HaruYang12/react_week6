@@ -12,7 +12,7 @@ export default function ProductsPage (){
     const [allProducts, setAllProducts] = useState([]);
 
 
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
     const [isScreenLoading, setIsScreenLoading] = useState(false);
 
     const [selectedCategory, setSelectedCategory] = useState('全部');
@@ -40,7 +40,7 @@ export default function ProductsPage (){
           try {
             const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products/all`);
             setAllProducts(res.data.products);
-          } catch (error) {
+          } catch {
             alert("取得產品失敗");
           }finally {
             setIsScreenLoading(false);
@@ -56,7 +56,7 @@ export default function ProductsPage (){
           try {
             const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products?category=${selectedCategory === '全部' ? '' : selectedCategory}`);
             setProducts(res.data.products);
-          } catch (error) {
+          } catch {
             alert("取得產品失敗");
           }finally {
             setIsScreenLoading(false);
@@ -67,27 +67,27 @@ export default function ProductsPage (){
 
       const categories = ['全部', ...new Set(allProducts.map((product) => product.category))];
       
-      const filteredProducts = allProducts.filter((product) => {
-        if (selectedCategory === '全部') return product;
+      // const filteredProducts = allProducts.filter((product) => {
+      //   if (selectedCategory === '全部') return product;
 
-        return product.category === selectedCategory;
-      })
+      //   return product.category === selectedCategory;
+      // })
     
-    const addCartItem = async (product_id, qty) => {
-        setIsLoading(true);
-        try {
-            await axios.post(`${BASE_URL}/v2/api/${API_PATH}/cart`, {
-            data: {
-              product_id,
-              qty: Number(qty) //qty需轉型成數字型別
-            }
-          })
-        } catch (error) {
-          alert('加入購物車失敗')
-        } finally {
-          setIsLoading(false);
-        }
-      }
+    // const addCartItem = async (product_id, qty) => {
+    //     setIsLoading(true);
+    //     try {
+    //         await axios.post(`${BASE_URL}/v2/api/${API_PATH}/cart`, {
+    //         data: {
+    //           product_id,
+    //           qty: Number(qty) //qty需轉型成數字型別
+    //         }
+    //       })
+    //     } catch (error) {
+    //       alert('加入購物車失敗')
+    //     } finally {
+    //       setIsLoading(false);
+    //     }
+    //   }
      
     
     return(<>
