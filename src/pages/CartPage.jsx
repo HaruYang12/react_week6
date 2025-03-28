@@ -5,9 +5,9 @@ import ReactLoading from 'react-loading';
 import { Link } from "react-router-dom";
 
 
-import Swiper from "swiper";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_PATH = import.meta.env.VITE_API_PATH;
@@ -47,24 +47,6 @@ export default function CartPage (){
     useEffect(() => {
         getCart();
         getRecommendProducts();
-
-        new Swiper(swiperRef.current, {
-          modules: [Autoplay],
-          loop: true,
-          autoplay: {
-            delay: 2500,
-            disableOnInteraction: false,
-          },
-          slidesPerView: 2,
-          spaceBetween: 10,
-          breakpoints: {
-            767: {
-              slidesPerView: 3,
-              spaceBetween: 30,
-            },
-          },
-        });
-        
 
     }, []);
 
@@ -324,7 +306,48 @@ export default function CartPage (){
               </div>
               <div className="my-5">
                 <h3 className="fw-bold">商品推薦</h3>
-                <div ref={swiperRef} className="swiper mt-4 mb-5">
+                <Swiper
+                  modules={[Autoplay]}
+                  loop={recommendProducts.length >= 6}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false
+                  }}
+                  slidesPerView={2}
+                  spaceBetween={10}
+                  breakpoints={{
+                    767: {
+                      slidesPerView: 3,
+                      spaceBetween: 30
+                    }
+                  }}
+                  className="mt-4 mb-5"
+                >
+                  {recommendProducts.map((product) => (
+                    <SwiperSlide key={product.id}>
+                      <div className="card border-0 mb-4 position-relative">
+                        <img
+                          src={product.imageUrl}
+                          className="card-img-top rounded-0"
+                          alt={product.title}
+                        />
+                        <div className="card-body p-0">
+                          <h4 className="mb-0 mt-3">
+                            <a href="#">{product.title}</a>
+                          </h4>
+                          <p className="card-text mb-0">
+                            NT$ {product.price}
+                            <span className="text-muted">
+                              <del>NT$ {product.origin_price}</del>
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+
+                {/* <div ref={swiperRef} className="swiper mt-4 mb-5">
                   <div className="swiper-wrapper">
                     {recommendProducts.map((product) => (
                       <div className="swiper-slide" key={product.id}>
@@ -351,7 +374,7 @@ export default function CartPage (){
                     </div>
                     ))}
                   </div>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
