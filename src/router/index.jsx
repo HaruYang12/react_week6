@@ -11,7 +11,7 @@ import CheckoutSuccessPage from "../pages/CheckoutSuccessPage";
 import LoginPage from "../pages/LoginPage";
 import AdminLayout from "../layouts/AdminLayout";
 import GoodsPage from "../pages/GoodsPage";
-
+import ListPage from "../pages/ListPage";
 
 
 
@@ -58,7 +58,8 @@ const router = createHashRouter([
         path: '/admin',
         element: <AdminLayout />,
         children: [
-            { path: 'goods', element: <GoodsPage /> }, // ✅ `/admin` 預設顯示 Dashboard
+            { path: 'goods', element: <GoodsPage /> },
+            { path: 'list', element: <ListPage /> }
         ]
     },
     {

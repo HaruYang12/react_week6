@@ -2,9 +2,9 @@ import { NavLink } from "react-router-dom";
 
 
 const routes = [
-  { path: "/goods", name: "產品管理" },
-  { path: "/list", name: "訂單管理" },
-  { path: "/coupon", name: "優惠券" }
+  { path: "/admin/goods", name: "產品管理" },
+  { path: "/admin/list", name: "訂單管理" },
+  { path: "/admin/coupon", name: "優惠券" }
 ];
 
 export default function AdminHeader() {
