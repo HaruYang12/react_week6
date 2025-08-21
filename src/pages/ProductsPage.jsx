@@ -159,11 +159,13 @@ export default function ProductsPage (){
                   {products.map((product) => (
                     <div key={product.id} className="col-md-6">
                       <div className="card border-0 mb-4 position-relative position-relative">
-                        <img
-                          src={product.imageUrl}
-                          className="card-img-top rounded-0"
-                          alt={product.title}
-                        />
+                        <Link to={`/products/${product.id}`}>
+                          <img
+                            src={product.imageUrl}
+                            className="card-img-top rounded-0"
+                            alt={product.title}
+                          />
+                        </Link>
                         <button onClick={() => toggleWishListItem(product.id)} type="button" className="btn border-none text-dark">
                           <i
                             className={`${wishList[product.id] ? 'fas' : 'far'} far fa-heart position-absolute`}
@@ -176,6 +178,7 @@ export default function ProductsPage (){
                           </h4>
                           <p className="card-text mb-0">
                             NT$ {product.price}
+                            <span> </span>
                             <span className="text-muted">
                               <del>NT$ {product.origin_price}</del>
                             </span>
