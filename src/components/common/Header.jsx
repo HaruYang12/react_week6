@@ -9,7 +9,7 @@ const API_PATH = import.meta.env.VITE_API_PATH;
 
 const routes = [
   { path: "/", name: "首頁" },
-  { path: "/products", name: "產品列表" },
+  { path: "/products", name: "商品列表" },
   { path: "/cart", name: "購物車" },
   { path: "/login", name: "登入" }
 ];

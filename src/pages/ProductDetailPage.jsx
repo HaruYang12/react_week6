@@ -157,11 +157,11 @@ export default function ProductDetailPage (){
                       </li>
                       <li className="breadcrumb-item">
                         <Link className="text-muted" to="/products">
-                          產品列表
+                          商品列表
                         </Link>
                       </li>
                       <li className="breadcrumb-item active" aria-current="page">
-                        產品資訊
+                        商品資訊
                       </li>
                     </ol>
                   </nav>
@@ -218,12 +218,14 @@ export default function ProductDetailPage (){
                 </div>
               </div>
               <div className="row my-5">
-                <div className="col-md-4">
+                <div className="col-md-3">
+                  <p>商品介紹：</p>
                   <p>
                     {product.description}
                   </p>
                 </div>
                 <div className="col-md-3">
+                  <p>商品規格：</p>
                   <p className="text-muted">
                   {product.content}
                   </p>

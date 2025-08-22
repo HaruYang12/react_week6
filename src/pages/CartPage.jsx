@@ -157,7 +157,7 @@ export default function CartPage (){
                     <thead>
                       <tr>
                         <th scope="col" className="border-0 ps-0">
-                          產品名稱
+                          商品名稱
                         </th>
                         <th scope="col" className="border-0">
                           數量

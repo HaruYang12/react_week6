@@ -4,9 +4,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { RouterProvider } from 'react-router-dom'
 import router from './router'
 import './assets/styles/all.scss'
-import 'bootstrap/dist/js/bootstrap.js'
 import { Provider } from 'react-redux'
 import store from './redux/store'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 
 
