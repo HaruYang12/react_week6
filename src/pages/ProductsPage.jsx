@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import ReactLoading from 'react-loading';
 import { Link } from "react-router-dom";
+import Pagination from '../components/Pagination';
     
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_PATH = import.meta.env.VITE_API_PATH;   
@@ -16,6 +17,13 @@ export default function ProductsPage (){
     const [isScreenLoading, setIsScreenLoading] = useState(false);
 
     const [selectedCategory, setSelectedCategory] = useState('全部');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageInfo, setPageInfo] = useState({      
+    current_page: 1,
+    total_pages: 1,
+    has_pre: false,
+    has_next: false
+    });
 
     const [wishList, setWishList] = useState(() => {
       const initWishList = localStorage.getItem('wishList') ? JSON.parse(localStorage.getItem('wishList')) : {};
@@ -50,44 +58,59 @@ export default function ProductsPage (){
 
       }, []);
 
-      useEffect(() => {
-        const getProducts = async () => {
-          setIsScreenLoading(true);
-          try {
-            const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products?category=${selectedCategory === '全部' ? '' : selectedCategory}`);
-            setProducts(res.data.products);
-          } catch {
-            alert("取得產品失敗");
-          }finally {
-            setIsScreenLoading(false);
+      // useEffect(() => {
+      //   const getProducts = async () => {
+      //     setIsScreenLoading(true);
+      //     try {
+      //       const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/products?category=${selectedCategory === '全部' ? '' : selectedCategory}`);
+      //       setProducts(res.data.products);
+      //     } catch {
+      //       alert("取得產品失敗");
+      //     }finally {
+      //       setIsScreenLoading(false);
+      //     }
+      //   };
+      //   getProducts();
+      // }, [selectedCategory])
+      const getProducts = async (page = 1, category = selectedCategory) => {
+        setIsScreenLoading(true);
+        try {
+          const categoryParam = category === '全部' ? '' : category;
+          const res = await axios.get(
+            `${BASE_URL}/v2/api/${API_PATH}/products?page=${page}&category=${encodeURIComponent(categoryParam)}`
+          );
+          setProducts(res.data.products);
+
+            // 後端分頁資訊寫入 state
+          if (res.data.pagination) {
+            setPageInfo(res.data.pagination);
+            setCurrentPage(res.data.pagination.current_page || page);
+          } else {
+            //  如果後端沒回傳 pagination，可避免出錯
+            setPageInfo((prev) => ({ ...prev, current_page: page, total_pages: 1, has_pre: false, has_next: false }));
+            setCurrentPage(page);
           }
-        };
-        getProducts();
-      }, [selectedCategory])
+        } catch {
+          alert("取得產品失敗");
+        } finally {
+          setIsScreenLoading(false);
+        }
+      };
+
+    useEffect(() => {
+      setCurrentPage(1);
+      getProducts(1, selectedCategory);
+     
+    }, [selectedCategory]);
+
+    // 新增：Pagination 的 callback
+    const handlePageChange = (page) => {
+      if (page < 1 || page > pageInfo.total_pages) return;
+      getProducts(page, selectedCategory);
+    };
 
       const categories = ['全部', ...new Set(allProducts.map((product) => product.category))];
       
-      // const filteredProducts = allProducts.filter((product) => {
-      //   if (selectedCategory === '全部') return product;
-
-      //   return product.category === selectedCategory;
-      // })
-    
-    // const addCartItem = async (product_id, qty) => {
-    //     setIsLoading(true);
-    //     try {
-    //         await axios.post(`${BASE_URL}/v2/api/${API_PATH}/cart`, {
-    //         data: {
-    //           product_id,
-    //           qty: Number(qty) //qty需轉型成數字型別
-    //         }
-    //       })
-    //     } catch (error) {
-    //       alert('加入購物車失敗')
-    //     } finally {
-    //       setIsLoading(false);
-    //     }
-    //   }
      
     
     return(<>
@@ -168,7 +191,7 @@ export default function ProductsPage (){
                         </Link>
                         <button onClick={() => toggleWishListItem(product.id)} type="button" className="btn border-none text-dark">
                           <i
-                            className={`${wishList[product.id] ? 'fas' : 'far'} far fa-heart position-absolute`}
+                            className={`${wishList[product.id] ? 'fas text-danger' : 'far'} fa-heart position-absolute`}
                             style={{ right: "16px", top: "16px" }}
                           ></i>
                         </button>
@@ -189,7 +212,10 @@ export default function ProductsPage (){
                     </div>
                   ))}
                 </div>
-                <nav className="d-flex justify-content-center">
+                {pageInfo.total_pages > 1 && (
+                <Pagination pageInfo={pageInfo} handlePageChange={handlePageChange} />
+                )}
+                {/* <nav className="d-flex justify-content-center">
                   <ul className="pagination">
                     <li className="page-item">
                       <a className="page-link" href="#" aria-label="Previous">
@@ -217,7 +243,7 @@ export default function ProductsPage (){
                       </a>
                     </li>
                   </ul>
-                </nav>
+                </nav> */}
               </div>
             </div>
           </div>
@@ -237,60 +263,4 @@ export default function ProductsPage (){
 
         </div>
     </>);
-
-
-    // return (
-    //     <>
-    //         <div className="container">
-    //             <table className="table align-middle">
-    //                 <thead>
-    //                     <tr>
-    //                     <th>圖片</th>
-    //                     <th>商品名稱</th>
-    //                     <th>價格</th>
-    //                     <th></th>
-    //                     </tr>
-    //                 </thead>
-    //                 <tbody>
-    //                     {products.map((product) => (
-    //                     <tr key={product.id}>
-    //                         <td style={{ width: "200px" }}>
-    //                         <img
-    //                             className="img-fluid"
-    //                             src={product.imageUrl}
-    //                             alt={product.title}
-    //                         />
-    //                         </td>
-    //                         <td>{product.title}</td>
-    //                         <td>
-    //                         <del className="h6">原價 {product.origin_price} 元</del>
-    //                         <div className="h5">特價 {product.origin_price}元</div>
-    //                         </td>
-    //                         <td>
-    //                         <div className="btn-group btn-group-sm">
-    //                             <Link
-    //                             to={`/products/${product.id}`}
-    //                             className="btn btn-outline-secondary"
-    //                             >
-    //                             查看更多
-    //                             </Link>
-    //                             <button type="button" className="btn btn-danger d-flex align-items-center gap-2" onClick={() => addCartItem(product.id, 1)} disabled={isLoading}>
-    //                             <div>加到購物車</div>
-    //                             {isLoading && (<ReactLoading
-    //                                 type={"spin"}
-    //                                 color={"#000"}
-    //                                 height={"1.5rem"}
-    //                                 width={"1.5rem"}
-    //                             />)}
-    //                             </button>
-    //                         </div>
-    //                         </td>
-    //                     </tr>
-    //                     ))}
-    //                 </tbody>
-    //             </table>
-    //         </div>
-  
-    //     </>
-    // )
 } 
