@@ -19,6 +19,12 @@ export default function Header() {
 
     const dispatch = useDispatch();
 
+    const itemCount = (carts ?? []).reduce(
+      (sum, item) => sum + Number(item.qty ?? 0),
+      0
+    );
+
+
     useEffect(() => {
       const getCart = async() => {
         try {
@@ -70,7 +76,7 @@ export default function Header() {
                           bottom: "12px",
                           left: "12px",
                         }}
-                      >{carts?.length}</span>
+                      >{itemCount}</span>
                     </div>) : route.name}
                     </NavLink>
                   ))}

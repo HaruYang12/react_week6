@@ -8,26 +8,43 @@ import { Link } from "react-router-dom";
 import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateCartData } from "../redux/cartSlice";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 const API_PATH = import.meta.env.VITE_API_PATH;
 
 export default function CartPage (){
-    const [cart, setCart] = useState({});
+    // const [cart, setCart] = useState({});
 
     const [isScreenLoading, setIsScreenLoading] = useState(false);
 
     const [recommendProducts, setRecommendProducts] = useState([]);
 
-    const getCart = async() => {
-        try {
-        const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`);
+    const { carts = [], total = 0, final_total = 0 } = useSelector((state) => state.cart);
 
-        setCart(res.data.data || { carts: [], total: 0, final_total: 0 });
-        } catch {
-        alert('取得購物車列表失敗')
-        }
-    }
+    const dispatch = useDispatch();
+
+    const getCart = async () => {
+      try {
+        const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`);
+        // 後端回傳 data 內應包含 { carts, total, final_total }
+        dispatch(updateCartData(res.data.data));
+      } catch (err) {
+        console.error('GET /cart 失敗', err?.response?.data || err);
+        alert('取得購物車列表失敗');
+      }
+    };
+
+    // const getCart = async() => {
+    //     try {
+    //     const res = await axios.get(`${BASE_URL}/v2/api/${API_PATH}/cart`);
+
+    //     setCart(res.data.data || { carts: [], total: 0, final_total: 0 });
+    //     } catch {
+    //     alert('取得購物車列表失敗')
+    //     }
+    // }
 
     const getRecommendProducts = async () => {
       try {
@@ -48,52 +65,38 @@ export default function CartPage (){
 
     }, []);
 
-     // 新增購物車
-    // const addCartItem = async (product_id, qty) => {
-    //     setIsLoading(true);
-    //     try {
-    //         await axios.post(`${BASE_URL}/v2/api/${API_PATH}/cart`, {
-    //         data: {
-    //         product_id,
-    //         qty: Number(qty) //qty需轉型成數字型別
-    //         }
-    //     })
-
-    //     getCart();
-    //     } catch (error) {
-    //     alert('加入購物車失敗')
-    //     } finally {
-    //     setIsLoading(false);
-    //     }
-    // }
-
-    // 清空購物車(全部)
-    // const removeCart = async () => {
+    // 清空購物車(單一產品)
+    // const removeCartItem = async (cartItem_id) => {
     //     setIsScreenLoading(true);
     //     try {
-    //     await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/carts`)
+    //     await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/cart/${cartItem_id}`)
 
     //     getCart();
     //     } catch {
-    //     alert('刪除購物車失敗')
+    //     alert('刪除購物車品項失敗')
     //     } finally {
     //     setIsScreenLoading(false);
     //     }
     // }
 
-    // 清空購物車(單一產品)
     const removeCartItem = async (cartItem_id) => {
-        setIsScreenLoading(true);
-        try {
-        await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/cart/${cartItem_id}`)
-
-        getCart();
-        } catch {
-        alert('刪除購物車品項失敗')
-        } finally {
+      setIsScreenLoading(true);
+      try {
+        await axios.delete(`${BASE_URL}/v2/api/${API_PATH}/cart/${cartItem_id}`);
+      } catch (err) {
+        console.error('DELETE /cart/:id 失敗', err?.response?.data || err);
+        alert('刪除購物車品項失敗');
         setIsScreenLoading(false);
-        }
-    }
+        return;
+      }
+
+      // ⭐ 刪除成功後重抓購物車，更新 Redux → 觸發 rerender
+      try {
+        await getCart();
+      } finally {
+        setIsScreenLoading(false);
+      }
+    };
 
     // 數量更新
     const updateCartItem = async (cartItem_id, product_id, qty) => {
@@ -106,45 +109,14 @@ export default function CartPage (){
             }
         })
 
-        getCart();
-        } catch {
+        await getCart();
+        } catch(err) {
+        console.error('PUT /cart/:id 失敗', err?.response?.data || err);
         alert('更新數量失敗')
         } finally {
         setIsScreenLoading(false);
         }
     }
-
-    // const {
-    //     register,
-    //     handleSubmit,
-    //     formState: { errors },
-    //     reset
-    //   } = useForm()
-    
-    // const onSubmit = handleSubmit((data) => {
-    //     console.log(data);
-    //     const { message, ...user } = data;
-    
-    //     const userInfo ={
-    //       data:{
-    //         user,
-    //         message
-    //       }
-    //     }
-    //     checkOut(userInfo);
-    // })
-      
-    // const checkOut = async(data) => {
-    //     setIsScreenLoading(true);
-    //     try {
-    //         await axios.post(`${BASE_URL}/v2/api/${API_PATH}/order`, data)
-    //         reset();
-    //     } catch {
-    //         alert('結帳失敗')
-    //     } finally {
-    //         setIsScreenLoading(false);
-    //     }
-    // }
 
       return (
         <div className="container-fluid">
@@ -169,7 +141,7 @@ export default function CartPage (){
                       </tr>
                     </thead>
                     <tbody>
-                      {cart?.carts?.length > 0 ? (cart.carts?.map((cartItem) => (
+                      {carts?.length > 0 ? (carts?.map((cartItem) => (
                         <tr key={cartItem.id}  className="border-bottom border-top">
                           <th
                             scope="row"
@@ -277,7 +249,7 @@ export default function CartPage (){
                           >
                             小計
                           </th>
-                          <td className="text-end border-0 px-0 pt-4">NT$ {cart.total}</td>
+                          <td className="text-end border-0 px-0 pt-4">NT$ {total}</td>
                         </tr>
                         <tr>
                           <th
@@ -294,7 +266,7 @@ export default function CartPage (){
                     </table>
                     <div className="d-flex justify-content-between mt-4">
                       <p className="mb-0 h4 fw-bold">總計</p>
-                      <p className="mb-0 h4 fw-bold">NT$ {cart.final_total}</p>
+                      <p className="mb-0 h4 fw-bold">NT$ {final_total}</p>
                     </div>
                     <Link to="/checkout-form" className="btn btn-dark w-100 mt-4">
                       結帳

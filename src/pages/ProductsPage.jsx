@@ -104,9 +104,10 @@ export default function ProductsPage (){
     }, [selectedCategory]);
 
     // 新增：Pagination 的 callback
-    const handlePageChange = (page) => {
+    const handlePageChange = async(page) => {
       if (page < 1 || page > pageInfo.total_pages) return;
-      getProducts(page, selectedCategory);
+      await getProducts(page, selectedCategory);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
       const categories = ['全部', ...new Set(allProducts.map((product) => product.category))];
